@@ -1,9 +1,14 @@
+package serveur;
+
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Vector;
 import bri.ServiceAmateur;
 import bri.ServiceBRi;
 import bri.ServiceProgrammeur;
@@ -15,6 +20,15 @@ public class ServeurBRi implements Runnable {
 	private ServerSocket listen_socket;
 	private Thread thread;
 	
+	public static Hashtable <String,BDD_Programmeur> programmeurs;
+	
+	static {
+		programmeurs = new Hashtable<String,BDD_Programmeur>();
+		programmeurs.put("noelle",new BDD_Programmeur("noelle","noelle","zeaezzeaze"));
+		programmeurs.put("gaelle",new BDD_Programmeur("gaelle","gaelle","zeaezzeaze"));
+		programmeurs.put("bob",new BDD_Programmeur("bob","bobi","zeaezzeaze"));
+	}
+
 	public ServeurBRi(int port, Class<? extends ServiceBRi> serviceClass) {
 		try {
 			this.listen_socket = new ServerSocket(port);
@@ -24,7 +38,7 @@ public class ServeurBRi implements Runnable {
 		
 		this.serviceClass = serviceClass;
 		try {
-			this.constr = serviceClass.getDeclaredConstructor(java.net.Socket.class);
+			this.constr = this.serviceClass.getDeclaredConstructor(java.net.Socket.class);
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +61,13 @@ public class ServeurBRi implements Runnable {
 		try {
 			while(true) {
 				Socket client_socket = listen_socket.accept(); //on prend le client
-				//ServiceBRi service = serviceClass.newInstance();
+				try {
+					ServiceBRi service = this.constr.newInstance(client_socket);
+					service.runBRi();
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		catch (IOException e) { }
@@ -61,5 +81,6 @@ public class ServeurBRi implements Runnable {
 	public void close() {
 		try {this.listen_socket.close();} catch (IOException e) {}
 	}
-
+	
+	
 }
