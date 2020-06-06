@@ -25,7 +25,7 @@ public class ServeurBRi implements Runnable {
 	static {
 		programmeurs = new Hashtable<String,BDD_Programmeur>();
 		programmeurs.put("noelle",new BDD_Programmeur("noelle","noelle","zeaezzeaze"));
-		programmeurs.put("gaelle",new BDD_Programmeur("gaelle","gaelle","zeaezzeaze"));
+		programmeurs.put("gaelle",new BDD_Programmeur("gaelle","gaelle","ftp://localhost:2121/classes/"));
 		programmeurs.put("bob",new BDD_Programmeur("bob","bobi","zeaezzeaze"));
 	}
 
