@@ -7,11 +7,6 @@ import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.rmi.registry.Registry;
-
-import serveur.ServeurBRi;
 
 public class ServiceAmateur implements ServiceBRi{
 	private final Socket socket;
@@ -26,11 +21,6 @@ public class ServiceAmateur implements ServiceBRi{
 		try {
 			BufferedReader socketIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			PrintWriter socketOut = new PrintWriter(socket.getOutputStream(), true);
-			
-			//variables
-			String classeName;
-			String fileDirURL;
-			URLClassLoader urlcl;
 			
 			while(true) {
 				System.out.println("Service Amateur");
@@ -52,7 +42,7 @@ public class ServiceAmateur implements ServiceBRi{
 						try {
 							try {
 								Constructor <?> constr = classe.getDeclaredConstructor(java.net.Socket.class);
-								socketOut.println("Lancement du service"); 
+								socketOut.println("Lancement du service (écrire close pour fermer le service)"); 
 								constr.newInstance(this.socket);
 							} catch (NoSuchMethodException | SecurityException |IllegalArgumentException | InvocationTargetException e) {
 								e.printStackTrace();

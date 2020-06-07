@@ -35,6 +35,7 @@ public class Programmeur {
 				msg = socketIn.readLine();
 				System.out.println(msg);
 				if(msg.contentEquals("fin de transmission, fermeture gestionnaire")) {
+					clavier.close();
 					s.close();
 					return;
 				}

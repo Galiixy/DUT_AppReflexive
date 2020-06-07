@@ -7,9 +7,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLClassLoader;
-
-import javax.xml.bind.ValidationException;
-
 import serveur.ServeurBRi;
 
 public class ServiceProgrammeur implements ServiceBRi {
@@ -75,6 +72,7 @@ public class ServiceProgrammeur implements ServiceBRi {
 						Class<?> classe = urlcl.loadClass(classeName);
 						System.out.println("Classe chargée : " + classe.getClass());
 						
+						@SuppressWarnings("unchecked")
 						Class<? extends ServiceBRi> classeChargée = (Class<? extends ServiceBRi>) classe;
 								//asSubclass(ServiceBRi.class);
 						
@@ -97,6 +95,7 @@ public class ServiceProgrammeur implements ServiceBRi {
 						Class<?> classe = urlcl.loadClass(classeName);
 						System.out.println("Classe chargée : " + classe.getClass());
 						
+						@SuppressWarnings("unchecked")
 						Class<? extends ServiceBRi> classeChargée = (Class<? extends ServiceBRi>) classe;
 
 						ServiceRegistry.updateService(classeChargée);

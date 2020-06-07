@@ -30,6 +30,7 @@ public class Amateur {
 				msg = socketIn.readLine();
 				System.out.println(msg);
 				if(msg.contentEquals("fin de transmission, fermeture gestionnaire")) {
+					clavier.close();
 					s.close();
 					return;
 				}
@@ -37,10 +38,14 @@ public class Amateur {
 				msg = socketIn.readLine();
 				System.out.println(msg);
 				if(!msg.equals("Classe non disponible ou absente")){
-					socketOut.println(clavier.next());//interagit avec le service
-					System.out.println(socketIn.readLine());
-					socketOut.println(clavier.next()); //ferme le service
-					System.out.println(socketIn.readLine()); // QUE FAIRE QUAND LE SERVICE INVERSION FERME LA SOCKET CAR ERREUR
+					while(true) {
+						socketOut.println(clavier.next());//interagit avec le service
+						String reception = socketIn.readLine();
+						if(reception.contentEquals("close")) {
+							break;
+						}
+						System.out.println(reception);
+					}
 				}
 				
 			}

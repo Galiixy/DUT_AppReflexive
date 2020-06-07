@@ -7,11 +7,7 @@ import java.lang.reflect.Modifier;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.Vector;
-import bri.ServiceAmateur;
 import bri.ServiceBRi;
-import bri.ServiceProgrammeur;
 
 public class ServeurBRi implements Runnable {
 
@@ -24,7 +20,7 @@ public class ServeurBRi implements Runnable {
 	
 	static {
 		programmeurs = new Hashtable<String,BDD_Programmeur>();
-		programmeurs.put("noelle",new BDD_Programmeur("noelle","noelle","zeaezzeaze"));
+		programmeurs.put("noelle",new BDD_Programmeur("noelle","noelle","ftp://localhost:2121/classe/"));
 		programmeurs.put("gaelle",new BDD_Programmeur("gaelle","gaelle","ftp://localhost:2121/classes/"));
 		programmeurs.put("bob",new BDD_Programmeur("bob","bobi","zeaezzeaze"));
 	}
