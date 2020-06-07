@@ -43,7 +43,11 @@ public class ServiceRegistry {
 		
 		//ajout dans le registry du service
 		System.out.println("classe ajoutée :" +runnableClass.getCanonicalName());
-		servicesClasses.put(runnableClass.getCanonicalName(), runnableClass);
+		
+		synchronized(servicesClasses) {
+			servicesClasses.put(runnableClass.getCanonicalName(), runnableClass);
+		}
+		
 	}
 
 	// une méthode de validation renvoie void et lève une exception si non validation
@@ -132,8 +136,10 @@ public class ServiceRegistry {
 				 throw new ValidationException("On ne peut l'implémenter! ");
 			}
 			System.out.println("classe " + runnableClass.getCanonicalName() + " mis à jour");
-			servicesClasses.remove(runnableClass.getCanonicalName());
-			servicesClasses.put(runnableClass.getCanonicalName(),runnableClass);
+			synchronized(servicesClasses) {
+				servicesClasses.remove(runnableClass.getCanonicalName());
+				servicesClasses.put(runnableClass.getCanonicalName(),runnableClass);
+			}
 		}
 		else {
 			throw new ValidationException("on ne peut pas mettre à jour un service qui n'existe pas !");
