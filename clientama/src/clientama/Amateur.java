@@ -18,8 +18,9 @@ public class Amateur {
 			PrintWriter socketOut = new PrintWriter(s.getOutputStream(), true);
 			String msg;
 			
+			//tant que l'amateur ne ferme pas le gestionnaire 
 			while(true) {
-			
+				//interaction avec l'amateur
 				System.out.println(socketIn.readLine());
 				System.out.println(socketIn.readLine());
 				System.out.println(socketIn.readLine());
@@ -37,10 +38,13 @@ public class Amateur {
 				socketOut.println(clavier.next());
 				msg = socketIn.readLine();
 				System.out.println(msg);
+				//lorsque la classe est disponible
 				if(!msg.equals("Classe non disponible ou absente")){
+					//interaction avec le service possible
 					while(true) {
 						socketOut.println(clavier.next());//interagit avec le service
 						String reception = socketIn.readLine();
+						//l'interaction se termine lorsque l'utilisateur écrit 'close'
 						if(reception.contentEquals("close")) {
 							break;
 						}
